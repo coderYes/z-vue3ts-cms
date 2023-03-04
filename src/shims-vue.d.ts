@@ -4,3 +4,12 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare let $store: any
+declare module '*.json'
+
+declare const VUE_APP_BASE_URL: string
+declare const VUE_APP_BASE_NAME: string
+declare module 'element-plus/dist/locale/zh-cn.mjs'
+
+// export {}

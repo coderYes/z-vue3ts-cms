@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
+    // 目标代码 ts->js(es5/6/7)
     "target": "esnext",
+    // 目标代码需要使用的模块化方案(commonjs require/module exports/es module import/export)
     "module": "esnext",
+    // 严格模式
     "strict": true,
+    // 对jsx进行怎么样的处理
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -11,20 +15,11 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "webpack-env"
-    ],
+    "types": ["webpack-env"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
@@ -33,7 +28,5 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
