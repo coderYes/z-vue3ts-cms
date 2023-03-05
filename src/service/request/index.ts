@@ -69,44 +69,44 @@ class Request {
     )
   }
 
-  // request<T = any>(config: RequestConfig<T>): Promise<T> {
-  //   return new Promise((resolve, reject) => {
-  //     if (config.interceptors?.requestInterceptor) {
-  //       config = config.interceptors.requestInterceptor(config)
-  //     }
-  //     if (config.showLoading === false) {
-  //       this.showLoading = config.showLoading
-  //     }
-  //     this.instance
-  //       .request<any, T>(config)
-  //       .then((res) => {
-  //         if (config.interceptors?.responseInterceptor) {
-  //           res = config.interceptors.responseInterceptor(res)
-  //         }
-  //         this.showLoading = DEFAULT_LOADING
-  //         resolve(res)
-  //       })
-  //       .catch((err) => {
-  //         this.showLoading = DEFAULT_LOADING
-  //         reject(err)
-  //       })
-  //   })
-  // }
+  request<T = any>(config: RequestConfig<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config)
+      }
+      if (config.showLoading === false) {
+        this.showLoading = config.showLoading
+      }
+      this.instance
+        .request<any, T>(config)
+        .then((res) => {
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res)
+          }
+          this.showLoading = DEFAULT_LOADING
+          resolve(res)
+        })
+        .catch((err) => {
+          this.showLoading = DEFAULT_LOADING
+          reject(err)
+        })
+    })
+  }
 
-  // get<T = any>(config: RequestConfig<T>): Promise<T> {
-  //   return this.request<T>({ ...config, method: 'GET' })
-  // }
+  get<T = any>(config: RequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'GET' })
+  }
 
-  // post<T = any>(config: RequestConfig<T>): Promise<T> {
-  //   return this.request<T>({ ...config, method: 'POST' })
-  // }
+  post<T = any>(config: RequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'POST' })
+  }
 
-  // delete<T = any>(config: RequestConfig<T>): Promise<T> {
-  //   return this.request<T>({ ...config, method: 'DELETE' })
-  // }
+  delete<T = any>(config: RequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'DELETE' })
+  }
 
-  // patch<T = any>(config: RequestConfig<T>): Promise<T> {
-  //   return this.request<T>({ ...config, method: 'PATCH' })
-  // }
+  patch<T = any>(config: RequestConfig<T>): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
+  }
 }
 export default Request
