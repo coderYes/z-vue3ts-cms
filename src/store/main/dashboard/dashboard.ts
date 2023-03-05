@@ -34,14 +34,18 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
   },
   actions: {
     async getDashboardDataAction({ commit }) {
-      const categoryCountResult = await getCategoryGoodsCount()
-      commit('changeCategoryGoodsCount', categoryCountResult.data)
-      const categorySaleResult = await getCategoryGoodsSale()
-      commit('changeCategoryGoodsSale', categorySaleResult.data)
-      const categoryFavorResult = await getCategoryGoodsFavor()
-      commit('changeCategoryGoodsFavor', categoryFavorResult.data)
-      const addressSaleResult = await getAddressGoodsSale()
-      commit('changeAddressGoodsSale', addressSaleResult.data)
+      try {
+        const categoryCountResult = await getCategoryGoodsCount()
+        commit('changeCategoryGoodsCount', categoryCountResult.data)
+        const categorySaleResult = await getCategoryGoodsSale()
+        commit('changeCategoryGoodsSale', categorySaleResult.data)
+        const categoryFavorResult = await getCategoryGoodsFavor()
+        commit('changeCategoryGoodsFavor', categoryFavorResult.data)
+        const addressSaleResult = await getAddressGoodsSale()
+        commit('changeAddressGoodsSale', addressSaleResult.data)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

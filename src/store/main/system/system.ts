@@ -68,75 +68,93 @@ const systemModule: Module<ISystemState, IRootState> = {
   },
   actions: {
     async getPageListAction({ commit }, payload: any) {
-      // console.log(payload)
+      try {
+        // console.log(payload)
 
-      // 获取pageUrl
-      const pageName = payload.pageName
-      const pageUrl = `/${pageName}/list`
+        // 获取pageUrl
+        const pageName = payload.pageName
+        const pageUrl = `/${pageName}/list`
 
-      // 页面发起请求
-      const pageResult = await getPageListData(pageUrl, payload.queryInfo)
-      // console.log(pageResult)
+        // 页面发起请求
+        const pageResult = await getPageListData(pageUrl, payload.queryInfo)
+        // console.log(pageResult)
 
-      // 数据存储到state中
-      const { list, totalCount } = pageResult.data
+        // 数据存储到state中
+        const { list, totalCount } = pageResult.data
 
-      commit(
-        `change${pageName.slice(0, 1).toUpperCase() + pageName.slice(1)}List`,
-        list
-      )
-      commit(
-        `change${pageName.slice(0, 1).toUpperCase() + pageName.slice(1)}Count`,
-        totalCount
-      )
+        commit(
+          `change${pageName.slice(0, 1).toUpperCase() + pageName.slice(1)}List`,
+          list
+        )
+        commit(
+          `change${
+            pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
+          }Count`,
+          totalCount
+        )
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async deletePageDataAction({ dispatch }, payload: any) {
-      // 拼接url
-      const { pageName, id } = payload
-      const pageUrl = `/${pageName}/${id}`
+      try {
+        // 拼接url
+        const { pageName, id } = payload
+        const pageUrl = `/${pageName}/${id}`
 
-      // 删除
-      await deletePageDataById(pageUrl)
+        // 删除
+        await deletePageDataById(pageUrl)
 
-      // 刷新
-      dispatch('getPageListAction', {
-        pageName,
-        queryInfo: {
-          offset: 0,
-          size: 10
-        }
-      })
+        // 刷新
+        dispatch('getPageListAction', {
+          pageName,
+          queryInfo: {
+            offset: 0,
+            size: 10
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async createPageDataAction({ dispatch }, payload: any) {
-      const { pageName, newData } = payload
-      const pageUrl = `/${pageName}`
-      await createPageData(pageUrl, newData)
+      try {
+        const { pageName, newData } = payload
+        const pageUrl = `/${pageName}`
+        await createPageData(pageUrl, newData)
 
-      // 刷新
-      dispatch('getPageListAction', {
-        pageName,
-        queryInfo: {
-          offset: 0,
-          size: 10
-        }
-      })
+        // 刷新
+        dispatch('getPageListAction', {
+          pageName,
+          queryInfo: {
+            offset: 0,
+            size: 10
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async editPageDataAction({ dispatch }, payload: any) {
-      const { pageName, editData, id } = payload
-      const pageUrl = `/${pageName}/${id}`
-      await editPageData(pageUrl, editData)
+      try {
+        const { pageName, editData, id } = payload
+        const pageUrl = `/${pageName}/${id}`
+        await editPageData(pageUrl, editData)
 
-      // 刷新
-      dispatch('getPageListAction', {
-        pageName,
-        queryInfo: {
-          offset: 0,
-          size: 10
-        }
-      })
+        // 刷新
+        dispatch('getPageListAction', {
+          pageName,
+          queryInfo: {
+            offset: 0,
+            size: 10
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

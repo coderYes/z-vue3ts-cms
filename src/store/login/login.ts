@@ -48,30 +48,34 @@ const loginModule: Module<ILoginState, IRootState> = {
   },
   actions: {
     async accountLoginAction({ commit, dispatch }, payload: IAccount) {
-      // 登录
-      const loginResult = await accountLoginRequest(payload)
-      const { id, token } = loginResult.data
-      commit('changeToken', token)
-      localCache.setCache('token', token)
+      try {
+        // 登录
+        const loginResult = await accountLoginRequest(payload)
+        const { id, token } = loginResult.data
+        commit('changeToken', token)
+        localCache.setCache('token', token)
 
-      // 发送初始化请求
-      dispatch('getInitialDataAction', null, { root: true })
+        // 发送初始化请求
+        dispatch('getInitialDataAction', null, { root: true })
 
-      // 请求用户信息
-      const userInfoRequest = await requestUserInfoById(id)
-      const userInfo = userInfoRequest.data
-      commit('changeUserInfo', userInfo)
-      localCache.setCache('userInfo', userInfo)
+        // 请求用户信息
+        const userInfoRequest = await requestUserInfoById(id)
+        const userInfo = userInfoRequest.data
+        commit('changeUserInfo', userInfo)
+        localCache.setCache('userInfo', userInfo)
 
-      // 请求用户菜单
-      const userMenusRequest = await requestUserMenusById(userInfo.role.id)
-      const userMenus = userMenusRequest.data
-      commit('changeUserMenus', userMenus)
-      localCache.setCache('userMenus', userMenus)
-      console.log(userMenus)
+        // 请求用户菜单
+        const userMenusRequest = await requestUserMenusById(userInfo.role.id)
+        const userMenus = userMenusRequest.data
+        commit('changeUserMenus', userMenus)
+        localCache.setCache('userMenus', userMenus)
+        console.log(userMenus)
 
-      // 跳转首页
-      router.push('/main')
+        // 跳转首页
+        router.push('/main')
+      } catch (error) {
+        console.log(error)
+      }
     },
     loadLocalLogin({ commit }) {
       const token = localCache.getCache('token')

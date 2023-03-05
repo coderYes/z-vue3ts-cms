@@ -24,24 +24,28 @@ const store = createStore<IRootState>({
   },
   actions: {
     async getInitialDataAction({ commit }) {
-      // 请求部门和角色数据
-      const departmentResult = await getPageListData('/department/list', {
-        offset: 0,
-        size: 1000
-      })
-      const { list: departmentList } = departmentResult.data
-      const roleResult = await getPageListData('/role/list', {
-        offset: 0,
-        size: 1000
-      })
-      const { list: roleList } = roleResult.data
-      const menuResult = await getPageListData('/menu/list', {})
-      const { list: menuList } = menuResult.data
+      try {
+        // 请求部门和角色数据
+        const departmentResult = await getPageListData('/department/list', {
+          offset: 0,
+          size: 1000
+        })
+        const { list: departmentList } = departmentResult.data
+        const roleResult = await getPageListData('/role/list', {
+          offset: 0,
+          size: 1000
+        })
+        const { list: roleList } = roleResult.data
+        const menuResult = await getPageListData('/menu/list', {})
+        const { list: menuList } = menuResult.data
 
-      //保存
-      commit('changeEntireDepartment', departmentList)
-      commit('changeEntireRole', roleList)
-      commit('changeEntireMenu', menuList)
+        //保存
+        commit('changeEntireDepartment', departmentList)
+        commit('changeEntireRole', roleList)
+        commit('changeEntireMenu', menuList)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   modules: {
